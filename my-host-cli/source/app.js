@@ -6,6 +6,7 @@ import Register from './components/Register.js';
 import Deploy from './components/Deploy.js';
 import Apps from './components/Apps.js';
 import Whoami from './components/Whoami.js';
+import QueueStatus from './components/Queue.js';
 import { COLORS } from './components/Header.js';
 
 function HelpScreen() {
@@ -30,6 +31,10 @@ function HelpScreen() {
       <Box>
         <Text bold color={COLORS.cyan}>  {'apps'.padEnd(14)}</Text>
         <Text color={COLORS.dim}>List deployed apps</Text>
+      </Box>
+      <Box>
+        <Text bold color={COLORS.yellow}>  {'queue'.padEnd(14)}</Text>
+        <Text color={COLORS.dim}>Show deploy queue status</Text>
       </Box>
       <Box>
         <Text bold color={COLORS.yellow}>  {'whoami'.padEnd(14)}</Text>
@@ -60,6 +65,8 @@ export default function App({ command, args }) {
         return <Apps />;
       case 'whoami':
         return <Whoami />;
+      case 'queue':
+        return <QueueStatus />;
       default:
         return <HelpScreen />;
     }

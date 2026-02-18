@@ -1,65 +1,31 @@
 import express from "express";
-import path from "path";
-
-import { cloneRepo } from "../services/git.service.js";
-import { validateRepo } from "../services/validate.service.js";
-import { buildFrontend } from "../services/frontend.service.js";
-import { runBackend } from "../services/docker.service.js";
-import { getNextPort } from "../services/port.service.js";
-import { getNextFrontendPort } from "../services/frontend-port.service.js";
-import { setupNginx } from "../services/nginx.service.js";
 import { verifyToken } from "../utils/auth.js";
+import { deployQueue, deployQueueEvents, getQueueStats } from "../services/queue.service.js";
 
 const router = express.Router();
 
+router.get("/queue", verifyToken, async (req, res) => {
+  const stats = await getQueueStats();
+  res.json(stats);
+});
+
 router.post("/", verifyToken, async (req, res) => {
+  const { repo } = req.body;
+  if (!repo) {
+    return res.status(400).json({ error: "repo url required" });
+  }
+
   try {
-    // 1️⃣ get repo url
-    const { repo } = req.body;
-    if (!repo) {
-      return res.status(400).json({ error: "repo url required" });
-    }
+    const job = await deployQueue.add("deploy-app", { repo, userId: req.user.id });
+    console.log(`📦 Job ${job.id} queued for: ${repo}`);
 
-    // 2️⃣ clone repo
-    const appId = await cloneRepo(repo);
-    const appPath = path.resolve(`../apps/${appId}`);
-
-    // 3️⃣ validate structure
-    validateRepo(appPath);
-
-    // 4️⃣ build frontend
-    await buildFrontend(appPath);
-
-    // 5️⃣ allocate ports
-    const backendPort = getNextPort();
-    const frontendPort = getNextFrontendPort();
-
-    // 6️⃣ run backend container
-    await runBackend(appId, appPath, backendPort);
-
-    // 7️⃣ setup nginx
-    const frontendDistPath = path.join(appPath, "frontend/dist");
-    await setupNginx(
-      appId,
-      frontendDistPath,
-      frontendPort,
-      backendPort
-    );
-
-    // 8️⃣ respond
-    return res.json({
-      status: "ok",
-      appId,
-      frontendUrl: `http://localhost:${frontendPort}`,
-      backendUrl: `http://localhost:${backendPort}`
-    });
+    // Wait for worker to finish (timeout 5 min)
+    const result = await job.waitUntilFinished(deployQueueEvents, 5 * 60 * 1000);
+    return res.json({ status: "ok", ...result });
 
   } catch (err) {
     console.error("DEPLOY ERROR:", err.message);
-    return res.status(500).json({
-      status: "error",
-      message: err.message
-    });
+    return res.status(500).json({ status: "error", message: err.message });
   }
 });
 
