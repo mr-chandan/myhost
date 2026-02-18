@@ -52,7 +52,7 @@ export default function Register() {
     <Box flexDirection="column">
       <Box marginBottom={1}>
         <Text bold color={COLORS.blue}>⚡ </Text>
-        <Text bold>Create a MyHost account</Text>
+        <Text bold>Create a PiDeploy account</Text>
       </Box>
 
       {/* Email */}

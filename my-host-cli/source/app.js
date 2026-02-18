@@ -46,7 +46,7 @@ function HelpScreen() {
       </Box>
 
       <Box marginTop={1}>
-        <Text color={COLORS.dim}>  Example: myhost deploy https://github.com/user/repo</Text>
+        <Text color={COLORS.dim}>  Example: pideploy deploy https://github.com/user/repo</Text>
       </Box>
     </Box>
   );

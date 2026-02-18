@@ -1,7 +1,7 @@
 import Conf from 'conf';
 
 const config = new Conf({
-  projectName: 'myhost-cli',
+  projectName: 'pideploy-cli',
   schema: {
     token: { type: 'string', default: '' },
     email: { type: 'string', default: '' },

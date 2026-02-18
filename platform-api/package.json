@@ -11,7 +11,9 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@ngrok/ngrok": "^1.7.0",
     "bcrypt": "^6.0.0",
+    "bullmq": "^5.69.3",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",

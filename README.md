@@ -1,12 +1,12 @@
-# ⚡ MyHost — Mini PaaS
+# 🍓 PiDeploy — Mini PaaS
 
-A lightweight Platform-as-a-Service that deploys full-stack apps (React + Node.js) from a GitHub repo URL with one command.
+A lightweight Platform-as-a-Service that deploys full-stack apps (React + Node.js) from a GitHub repo URL with one command. Runs on a Raspberry Pi.
 
 ## Architecture
 
 ```
 ┌──────────────┐     ┌──────────────────┐     ┌─────────────────┐
-│  MyHost CLI  │────▶│  Platform API    │────▶│  Docker + Nginx  │
+│ PiDeploy CLI │────▶│  Platform API    │────▶│  Docker + Nginx  │
 │  (Ink/React) │     │  (Express + JWT) │     │  (per-app)       │
 └──────────────┘     └──────────────────┘     └─────────────────┘
 ```
@@ -24,7 +24,7 @@ A lightweight Platform-as-a-Service that deploys full-stack apps (React + Node.j
 ## Project Structure
 
 ```
-myhost/
+pideploy/
 ├── platform-api/          # Express API server
 │   ├── src/
 │   │   ├── server.js      # Entry point
@@ -45,7 +45,7 @@ myhost/
 │   └── data/
 │       └── users.json     # User store
 │
-├── my-host-cli/           # CLI tool (Ink + React)
+├── pideploy-cli/          # CLI tool (Ink + React)
 │   └── source/
 │       ├── cli.js         # Entry point & subcommand routing
 │       ├── app.js         # Main component router
@@ -69,7 +69,7 @@ npm run start
 ### 2. Install the CLI
 
 ```bash
-cd my-host-cli
+cd pideploy-cli
 npm install
 npm run build
 npm link
@@ -78,12 +78,12 @@ npm link
 ### 3. Use it
 
 ```bash
-myhost register          # Create an account
-myhost login             # Sign in
-myhost deploy <repo-url> # Deploy a full-stack app
-myhost apps              # List deployed apps
-myhost whoami            # Check current user
-myhost logout            # Sign out
+pideploy register          # Create an account
+pideploy login             # Sign in
+pideploy deploy <repo-url> # Deploy a full-stack app
+pideploy apps              # List deployed apps
+pideploy whoami            # Check current user
+pideploy logout            # Sign out
 ```
 
 ## Repo Requirements
@@ -112,4 +112,4 @@ your-repo/
 
 ---
 
-*Built with ❤️ as a mini PaaS learning project.*
+*Built with ❤️ as a mini PaaS — designed to run on a Raspberry Pi.*

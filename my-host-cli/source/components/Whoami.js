@@ -13,7 +13,7 @@ export default function Whoami() {
     return (
       <Box flexDirection="column">
         <Text color={COLORS.red}>  ✖ Not logged in.</Text>
-        <Text color={COLORS.dim}>  Run: myhost login</Text>
+        <Text color={COLORS.dim}>  Run: pideploy login</Text>
       </Box>
     );
   }

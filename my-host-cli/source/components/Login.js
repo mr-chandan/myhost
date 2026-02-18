@@ -41,7 +41,7 @@ export default function Login() {
     <Box flexDirection="column">
       <Box marginBottom={1}>
         <Text bold color={COLORS.blue}>⚡ </Text>
-        <Text bold>Sign in to MyHost</Text>
+        <Text bold>Sign in to PiDeploy</Text>
       </Box>
 
       {/* Email input */}

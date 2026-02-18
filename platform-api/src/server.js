@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import deployRoute from "./routes/deploy.js";
 import authRoute from "./routes/auth.js";
 import appsRoute from "./routes/apps.js";
+import { startTunnel } from "./services/tunnel.service.js";
 
 dotenv.config();
 
@@ -15,6 +16,10 @@ app.use("/auth", authRoute);
 app.use("/apps", appsRoute);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Platform API running on port ${PORT}`);
+
+  // Start ngrok tunnel to Nginx (port 80)
+  const tunnelUrl = await startTunnel();
+  console.log(`🌍 Apps will be accessible at: ${tunnelUrl}/<app_id>/`);
 });

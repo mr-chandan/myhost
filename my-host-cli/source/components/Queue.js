@@ -12,7 +12,7 @@ export default function QueueStatus() {
 
   useEffect(() => {
     if (!config.get('token')) {
-      setError('Not logged in. Run: myhost login');
+      setError('Not logged in. Run: pideploy login');
       setTimeout(() => exit(), 1500);
       return;
     }

@@ -21,13 +21,13 @@ export default function Deploy({ repo }) {
 
   useEffect(() => {
     if (!config.get('token')) {
-      setError('Not logged in. Run: myhost login');
+      setError('Not logged in. Run: pideploy login');
       setTimeout(() => exit(), 1500);
       return;
     }
 
     if (!repo) {
-      setError('No repo URL provided. Usage: myhost deploy <repo-url>');
+      setError('No repo URL provided. Usage: pideploy deploy <repo-url>');
       setTimeout(() => exit(), 1500);
       return;
     }

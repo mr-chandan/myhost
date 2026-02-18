@@ -12,7 +12,7 @@ export default function Apps() {
 
   useEffect(() => {
     if (!config.get('token')) {
-      setError('Not logged in. Run: myhost login');
+      setError('Not logged in. Run: pideploy login');
       setTimeout(() => exit(), 1500);
       return;
     }
@@ -51,7 +51,7 @@ export default function Apps() {
           <Text bold color={COLORS.blue}>📦 </Text>
           <Text bold>Your Deployed Apps</Text>
         </Box>
-        <Text color={COLORS.dim}>  No apps deployed yet. Run: myhost deploy &lt;repo-url&gt;</Text>
+        <Text color={COLORS.dim}>  No apps deployed yet. Run: pideploy deploy &lt;repo-url&gt;</Text>
       </Box>
     );
   }
@@ -81,7 +81,7 @@ export default function Apps() {
         </Box>
       ))}
 
-      <Text color={COLORS.dim}>{'\n'}  Run `myhost deploy &lt;repo&gt;` to add more apps.</Text>
+      <Text color={COLORS.dim}>{'\n'}  Run `pideploy deploy &lt;repo&gt;` to add more apps.</Text>
     </Box>
   );
 }

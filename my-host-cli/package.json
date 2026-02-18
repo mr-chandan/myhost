@@ -1,9 +1,9 @@
 {
-	"name": "my-host-cli",
+	"name": "pideploy-cli",
 	"version": "1.0.0",
 	"license": "MIT",
 	"bin": {
-		"myhost": "dist/cli.js"
+		"pideploy": "dist/cli.js"
 	},
 	"type": "module",
 	"engines": {

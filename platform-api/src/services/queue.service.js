@@ -5,8 +5,8 @@ import { validateRepo } from "./validate.service.js";
 import { buildFrontend } from "./frontend.service.js";
 import { runBackend } from "./docker.service.js";
 import { getNextPort } from "./port.service.js";
-import { getNextFrontendPort } from "./frontend-port.service.js";
 import { setupNginx } from "./nginx.service.js";
+import { getTunnelUrl } from "./tunnel.service.js";
 
 const connection = { host: "127.0.0.1", port: 6379 };
 
@@ -24,19 +24,20 @@ const worker = new Worker(
     const appId = await cloneRepo(repo);
     const appPath = path.resolve(`../apps/${appId}`);
     validateRepo(appPath);
-    await buildFrontend(appPath);
+    await buildFrontend(appPath, appId);
 
     const backendPort = getNextPort();
-    const frontendPort = getNextFrontendPort();
     await runBackend(appId, appPath, backendPort);
 
     const frontendDistPath = path.join(appPath, "frontend/dist");
-    await setupNginx(appId, frontendDistPath, frontendPort, backendPort);
+    await setupNginx(appId, frontendDistPath, backendPort);
+
+    const baseUrl = getTunnelUrl();
 
     return {
       appId,
-      frontendUrl: `http://localhost:${frontendPort}`,
-      backendUrl: `http://localhost:${backendPort}`,
+      frontendUrl: `${baseUrl}/${appId}/`,
+      backendUrl: `${baseUrl}/${appId}/api/`,
     };
   },
   { connection, concurrency: 2 }

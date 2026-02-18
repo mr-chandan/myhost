@@ -14,12 +14,14 @@ export default function Header() {
   return (
     <Box flexDirection="column" marginBottom={1}>
       <Box>
-        <Text bold color={COLORS.blue}>M</Text>
-        <Text bold color={COLORS.red}>y</Text>
-        <Text bold color={COLORS.yellow}>H</Text>
-        <Text bold color={COLORS.blue}>o</Text>
-        <Text bold color={COLORS.green}>s</Text>
-        <Text bold color={COLORS.red}>t</Text>
+        <Text bold color={COLORS.blue}>P</Text>
+        <Text bold color={COLORS.red}>i</Text>
+        <Text bold color={COLORS.yellow}>D</Text>
+        <Text bold color={COLORS.blue}>e</Text>
+        <Text bold color={COLORS.green}>p</Text>
+        <Text bold color={COLORS.red}>l</Text>
+        <Text bold color={COLORS.cyan}>o</Text>
+        <Text bold color={COLORS.yellow}>y</Text>
         <Text color={COLORS.dim}> CLI</Text>
         <Text color={COLORS.dim}> v1.0.0</Text>
       </Box>

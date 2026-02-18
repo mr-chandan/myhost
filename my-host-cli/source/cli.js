@@ -8,7 +8,7 @@ import config from './utils/config.js';
 const cli = meow(
   `
   Usage
-    $ myhost <command> [options]
+    $ pideploy <command> [options]
 
   Commands
     login        Sign in to your account
@@ -19,10 +19,10 @@ const cli = meow(
     logout       Sign out
 
   Examples
-    $ myhost login
-    $ myhost register
-    $ myhost deploy https://github.com/user/repo
-    $ myhost apps
+    $ pideploy login
+    $ pideploy register
+    $ pideploy deploy https://github.com/user/repo
+    $ pideploy apps
 `,
   {
     importMeta: import.meta,
