@@ -1,0 +1,12 @@
+[
+  {
+    "id": "7cf41a35-4067-4f92-82bc-b9cb1b0329ba",
+    "email": "you@example.com",
+    "passwordHash": "$2b$10$IOYG53dczXp9Rerx9bz8OOQovIZ8.NCRxtd8N2qQ570P5cZuIGHSC"
+  },
+  {
+    "id": "69c8806d-6038-4781-9d77-a38c82df37e0",
+    "email": "apple@gmail.com",
+    "passwordHash": "$2b$10$4gjTll/vFxa53imS.FLlbuawfqW3Q1TitMvSItYvXOX32V7rYiv9y"
+  }
+]

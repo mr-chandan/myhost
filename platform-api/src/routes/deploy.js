@@ -1,40 +1,61 @@
 import express from "express";
 import path from "path";
+
 import { cloneRepo } from "../services/git.service.js";
 import { validateRepo } from "../services/validate.service.js";
 import { buildFrontend } from "../services/frontend.service.js";
+import { runBackend } from "../services/docker.service.js";
+import { getNextPort } from "../services/port.service.js";
+import { getNextFrontendPort } from "../services/frontend-port.service.js";
+import { setupNginx } from "../services/nginx.service.js";
+import { verifyToken } from "../utils/auth.js";
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   try {
+    // 1️⃣ get repo url
     const { repo } = req.body;
-
     if (!repo) {
-      return res.status(400).json({
-        status: "error",
-        message: "GitHub repo URL is required"
-      });
+      return res.status(400).json({ error: "repo url required" });
     }
 
-    // 1️⃣ Clone repo
+    // 2️⃣ clone repo
     const appId = await cloneRepo(repo);
     const appPath = path.resolve(`../apps/${appId}`);
 
-    // 2️⃣ Validate structure
+    // 3️⃣ validate structure
     validateRepo(appPath);
 
-    // 3️⃣ Build frontend
+    // 4️⃣ build frontend
     await buildFrontend(appPath);
 
+    // 5️⃣ allocate ports
+    const backendPort = getNextPort();
+    const frontendPort = getNextFrontendPort();
+
+    // 6️⃣ run backend container
+    await runBackend(appId, appPath, backendPort);
+
+    // 7️⃣ setup nginx
+    const frontendDistPath = path.join(appPath, "frontend/dist");
+    await setupNginx(
+      appId,
+      frontendDistPath,
+      frontendPort,
+      backendPort
+    );
+
+    // 8️⃣ respond
     return res.json({
       status: "ok",
       appId,
-      message: "Repo validated and frontend built"
+      frontendUrl: `http://localhost:${frontendPort}`,
+      backendUrl: `http://localhost:${backendPort}`
     });
 
   } catch (err) {
-    console.error(err.message);
+    console.error("DEPLOY ERROR:", err.message);
     return res.status(500).json({
       status: "error",
       message: err.message

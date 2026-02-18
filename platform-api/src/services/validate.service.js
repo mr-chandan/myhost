@@ -14,10 +14,8 @@ export function validateRepo(appPath) {
     throw new Error("Missing backend/package.json");
   }
 
-  const entryPoint = path.join(backendPath, "index.js");
-  const serverPoint = path.join(backendPath, "server.js");
-  if (!fs.existsSync(entryPoint) && !fs.existsSync(serverPoint)) {
-    throw new Error("Missing backend/index.js or backend/server.js");
+  if ( !fs.existsSync(path.join(backendPath, "server.js"))) {
+    throw new Error("Missing backend/server.js");
   }
 
   // frontend checks
